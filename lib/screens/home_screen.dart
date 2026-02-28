@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'add_task_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -12,11 +14,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String? name;
+  List<dynamic> tasksList = [];
 
   @override
   void initState() {
     super.initState();
     loadName();
+    loadTasks();
   }
 
   loadName() async {
@@ -25,11 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {});
   }
 
+  loadTasks() {}
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xff181818),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -86,6 +91,18 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddTaskScreen()),
+            );
+          },
+          label: Text("Add Task"),
+          icon: Icon(Icons.add),
+          backgroundColor: Color(0xff15B86C),
+          foregroundColor: Colors.white,
         ),
       ),
     );

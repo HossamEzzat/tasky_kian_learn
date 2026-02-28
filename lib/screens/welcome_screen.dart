@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:td/screens/home_screen.dart';
 
+import '../widgets/custom_textformfield.dart';
+
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 
@@ -19,7 +21,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xff181818),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -69,45 +70,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 SizedBox(height: 28),
                 Form(
                   key: formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Full Name",
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xffFFFFFF),
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      TextFormField(
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Please enter your name";
-                          }
-                          return null;
-                        },
-                        controller: nameController,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide(color: Color(0xff282828)),
-                          ),
-
-                          fillColor: Color(0xff282828),
-                          filled: true,
-                          hint: Text(
-                            "Enter your name",
-                            style: TextStyle(color: Color(0xff6D6D6D)),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: CustomTextFormField(
+                    maxLines: 1,
+                    Controller: nameController,
+                    title: 'Full Name',
+                    validator: (String? value) {
+                      if (value!.isEmpty) {
+                        return "Please enter your name";
+                      }
+                      return null;
+                    },
+                    hint: 'add your name',
                   ),
                 ),
                 SizedBox(height: 24),
