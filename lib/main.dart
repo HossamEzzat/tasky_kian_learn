@@ -1,6 +1,8 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:td/screens/home_screen.dart';
+import 'package:td/screens/main_screen.dart';
 import 'package:td/screens/welcome_screen.dart';
 
 Future<void> main() async {
@@ -8,7 +10,12 @@ Future<void> main() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   String name = prefs.getString("name") ?? "";
 
-  runApp(MyApp(name: name));
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => MyApp(name: name), // Wrap your app
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +33,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: name.isEmpty ? WelcomeScreen() : HomeScreen(),
+      home: name.isEmpty ? WelcomeScreen() : MainScreen(),
     );
   }
 }

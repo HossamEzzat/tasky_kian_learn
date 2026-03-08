@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:td/models/task_model.dart';
 import 'package:td/widgets/custom_textformfield.dart';
 
 class AddTaskScreen extends StatefulWidget {
@@ -57,7 +58,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
                     final prefs = await SharedPreferences.getInstance();
-
+                    final model = TaskModel(
+                      taskName: nameController.text,
+                      taskDesc: descriptionController.text,
+                    );
                     String? tasksString = prefs.getString("tasks");
 
                     List<dynamic> tasksList = [];
@@ -70,16 +74,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       }
                     }
 
-                    Map<String, dynamic> newTask = {
-                      "name": nameController.text,
-                      "desc": descriptionController.text,
-                    };
+                    Map<String, dynamic> newTask = model.toMap();
 
                     tasksList.add(newTask);
 
                     await prefs.setString("tasks", jsonEncode(tasksList));
-
-                    print(tasksList);
+                    Navigator.pop(context);
                   }
                 },
                 style: ElevatedButton.styleFrom(
