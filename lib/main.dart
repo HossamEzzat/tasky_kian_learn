@@ -1,14 +1,17 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:td/screens/main_screen.dart';
-import 'package:td/screens/welcome_screen.dart';
+import 'package:td/screens/auth/service/auth_wrapper.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   String name = prefs.getString("name") ?? "";
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
     DevicePreview(
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: name.isEmpty ? WelcomeScreen() : MainScreen(),
+      home: AuthWrapper(),
     );
   }
 }

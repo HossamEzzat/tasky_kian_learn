@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField({
+  CustomTextFormField({
     super.key,
     required this.Controller,
     required this.title,
     required this.validator,
     required this.hint,
     required this.maxLines,
+    this.keyboardType,
   });
 
   final TextEditingController Controller;
@@ -16,6 +17,7 @@ class CustomTextFormField extends StatelessWidget {
   final String hint;
   final FormFieldValidator<String>? validator;
   final int maxLines;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class CustomTextFormField extends StatelessWidget {
         SizedBox(height: 8),
         TextFormField(
           maxLines: maxLines,
+          keyboardType: keyboardType,
           validator: validator,
           controller: Controller,
           style: TextStyle(color: Colors.white),
